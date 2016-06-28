@@ -17,6 +17,10 @@
 		</a>
 	{% endif %}
     {% include 'inc/export_button.html' with obj_type='prefixes' %}
+    	<a href="{% url 'ipam:prefix_search' %}" class="btn btn-info">
+    		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    		Search a prefix
+    	</a>
 </div>
 <h1>Prefixes</h1>
 <div class="row">
