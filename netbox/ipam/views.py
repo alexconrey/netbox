@@ -324,9 +324,9 @@ class PrefixDeleteView(PermissionRequiredMixin, ObjectDeleteView):
 class PrefixSearchView(PermissionRequiredMixin, ObjectDeleteView):
     permission_required = 'ipam.search_prefix'
     model = Prefix
-    form = forms.PrefixSearchForm
-    table = tables.PrefixTable
-    redirect_url = 'ipam:prefix_search'
+    #form = forms.PrefixSearchForm
+    #table = tables.PrefixTable
+    #redirect_url = 'ipam:prefix_search'
     template_name = 'ipam/prefix_search.html'
 
 
