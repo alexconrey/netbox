@@ -182,6 +182,26 @@ class PrefixForm(forms.ModelForm, BootstrapMixin):
                                         "addresses instead.")
         return data
 
+class PrefixSearchForm(forms.ModelForm):
+    vrf = forms.ModelChoiceField(queryset=VRF.objects.all(), required=False, to_field_name='rd',
+                                 error_messages={'invalid_choice': 'VRF not found.'})
+    site = forms.ModelChoiceField(queryset=Site.objects.all(), required=False, to_field_name='name',
+                                  error_messages={'invalid_choice': 'Site not found.'})
+    status_name = forms.ChoiceField(choices=[(s[1], s[0]) for s in PREFIX_STATUS_CHOICES])
+    role = forms.ModelChoiceField(queryset=Role.objects.all(), required=False, to_field_name='name',
+                                  error_messages={'invalid_choice': 'Invalid role.'})
+
+    class Meta:
+        model = Prefix
+        fields = ['prefix', 'vrf', 'site', 'status_name', 'role', 'description']
+
+    def save(self, *args, **kwargs):
+        m = super(PrefixFromCSVForm, self).save(commit=False)
+        # Assign Prefix status by name
+        m.status = dict(self.fields['status_name'].choices)[self.cleaned_data['status_name']]
+        if kwargs.get('commit'):
+            m.save()
+        return m
 
 class PrefixFromCSVForm(forms.ModelForm):
     vrf = forms.ModelChoiceField(queryset=VRF.objects.all(), required=False, to_field_name='rd',
