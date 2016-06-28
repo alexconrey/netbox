@@ -327,6 +327,7 @@ class PrefixSearchView(PermissionRequiredMixin, ObjectDeleteView):
     form = forms.PrefixSearchForm
     table = tables.PrefixTable
     redirect_url = 'ipam:prefix_search'
+    template_name = 'ipam/prefix_search.html'
 
 
 class PrefixBulkImportView(PermissionRequiredMixin, BulkImportView):
